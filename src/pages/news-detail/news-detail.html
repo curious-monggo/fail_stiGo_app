@@ -1,0 +1,27 @@
+<!--
+  Generated template for the NewsDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="googleWhite" >
+    <ion-title></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <div *ngIf="newsDocument">
+      <img class="img" src="{{ newsDocument.news_photo_url }}" />
+      <div padding>
+        <p class="date" *ngIf="newsDocument.news_timestamp_post_created">Date time created: {{ newsDocument.news_timestamp_post_created?.toDate() | date: 'medium'  }}</p>
+        <p class="date" *ngIf="newsDocument.news_timestamp_post_last_updated">Last updated: {{ newsDocument.news_timestamp_post_last_updated?.toDate() | date: 'medium'  }}</p>
+        <h1 class="title">{{ newsDocument.news_title }}</h1>
+        <p class="content">{{ newsDocument.news_content }}</p>
+      </div>
+  </div>
+
+</ion-content>

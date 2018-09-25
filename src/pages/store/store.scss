@@ -1,0 +1,60 @@
+page-store {
+    h3{
+        margin-left: 16px
+    }
+    .transparent {
+        border-color: rgba(0, 0, 0, 0);
+        background-color: rgba(0, 0, 0, 0);
+        color: white; 
+    }
+
+    .center{
+        position: absolute;
+        left: 50.0%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+        // position: absolute;
+        // left: 47.8%;
+        // margin-right: 5.2%;
+        // transform: translate(-50%, -50%) 
+    .right{
+        position: absolute;
+        left: 100.0%;
+        margin-right: -0%;
+        margin-top: 5%;
+        transform: translate(-100%, -0%);
+    }
+    ion-avatar img  {
+        width:100% !important;
+        height : 100% !important;
+        max-width: 30px !important;  //any size
+        max-height: 30px !important; //any size
+    }
+
+    .card-news{
+        display: inline-block;
+        border-radius: 5px;
+        width:40% !important;
+        height:50% !important;
+        // min-width: 300px !important;
+        // min-height: 300px!important;
+        max-width: 300px !important;
+        max-height: 320px !important;
+        margin-left:16px;
+        margin-right:0px;
+        // margin-right:8px;
+        // margin-bottom:8px;
+        
+    }
+
+    .scroll-news{
+        white-space: nowrap;
+        height: 320px !important;
+    //  /   max-height: 500px!important;
+        // margin-left:8px;
+        
+        
+        // overflow-y: hidden;
+    }
+}

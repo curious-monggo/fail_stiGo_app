@@ -1,0 +1,73 @@
+<ion-header >
+
+  <ion-navbar color="googleWhite">
+      <ion-buttons left>
+          <button ion-button icon-only >
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-buttons>
+    <ion-title class="center">Home</ion-title>
+
+    <ion-buttons right>
+      <button ion-button round clear (click)="onAccountPhotoClicked()" >
+        <ion-item  class="transparent" >
+            <ion-avatar item-end  >
+                <!-- <img src="{{photo_url}}"> -->
+                <img src="{{photo_url}}"  class="right">
+              </ion-avatar>
+        </ion-item>
+
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <!-- <h4>Welcome back, {{displayName}}</h4>
+  <br> -->
+  <h3>News</h3>
+  <ion-scroll class="scroll-news" scrollX="true" direction="x" >
+    
+      <ion-card  (click)="openNewsDetailPage(newsDocument.id)"
+      *ngFor="let newsDocument of latestNewsCollection"
+      class="card">
+          <div class="card-img-news" [style.background-image]="'url(' + newsDocument.news_photo_url + ')'"></div>
+          <ion-card-content>
+            <p>
+               {{ newsDocument.news_title | slice: 0: 145}} ...
+            </p>  
+          </ion-card-content>
+      </ion-card>
+  </ion-scroll>
+  
+  <h3>Programs</h3>
+  <ion-scroll class="scroll-programs" scrollX="true" direction="x">
+    <ion-card class="card small">
+      <div class="card-img-programs" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+      <ion-card-content>
+        <p>
+           Lorem ipsum dolor amet title
+        </p>  
+      </ion-card-content>
+  </ion-card>
+  <ion-card class="card small">
+    <div class="card-img-programs" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+    <ion-card-content>
+      <p>
+         Lorem ipsum dolor amet title
+      </p>  
+    </ion-card-content>
+</ion-card>
+  </ion-scroll>
+  <h3>Latest Events</h3>
+  <ion-scroll class="scroll-events" scrollX="true" direction="x">
+    <ion-card class="card">
+      <div class="card-img-events" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+  </ion-card>
+  <ion-card class="card">
+    <div class="card-img-events" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+</ion-card>
+  </ion-scroll>
+</ion-content>

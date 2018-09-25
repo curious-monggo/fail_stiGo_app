@@ -1,0 +1,32 @@
+<!--
+  Generated template for the RegistrationCodePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Student Registration</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title text-wrap>To register as a student, please enter your registration code on the field below: </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item no-padding>
+        <ion-label color="primary" stacked>Registration code</ion-label>
+        <ion-input [(ngModel)]="userTypedCode" type="text" placeholder="Ex: 4kdWq2"></ion-input>
+      </ion-item>
+      <button ion-button (click)="presentLoading()">Register</button>
+
+
+    </ion-card-content>
+    </ion-card>
+</ion-content>

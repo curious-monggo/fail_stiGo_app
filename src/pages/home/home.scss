@@ -1,0 +1,119 @@
+page-home {
+    h3{
+        margin-left: 12px;
+        margin-bottom: 0;
+        font-size: 2.3rem;
+        
+    }
+    .transparent {
+        border-color: rgba(0, 0, 0, 0);
+        background-color: rgba(0, 0, 0, 0);
+        color: white; 
+    }
+
+    .center{
+        position: absolute;
+        left: 50.0%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+        // position: absolute;
+        // left: 47.8%;
+        // margin-right: 5.2%;
+        // transform: translate(-50%, -50%) 
+    .right{
+        position: absolute;
+        left: 100.0%;
+        margin-right: -0%;
+        margin-top: 5%;
+        transform: translate(-100%, -0%);
+    }
+    ion-avatar img  {
+        width:100% !important;
+        height : 100% !important;
+        max-width: 30px !important;  //any size
+        max-height: 30px !important; //any size
+    }
+    .card{
+        display: inline-block;
+        border-radius: 8px;
+    }
+    
+    .scroll-news{
+        white-space: nowrap;
+        height: 270px;
+        max-height: 270px !important;
+    }
+    .scroll-events{
+        white-space: nowrap;
+        height: 320px;
+        max-height: 320px !important;
+    }
+    .scroll-programs{
+        white-space: nowrap;
+        height: 220px;
+        max-height: 220px !important;
+        //margin-right:2px;
+    }
+
+    .small{
+        width:180px;
+        margin-right:4px;
+    }
+    .card-img-news {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 200px;
+
+     }
+     .card-img-events {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 300px;
+     }
+     .card-img-programs {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        
+        height: 150px;
+     }
+     @media only screen and (min-width: 400px) {
+        .scroll-news{
+            white-space: nowrap;
+            height: 500px;
+            max-height: 500px !important;
+        }
+        .scroll-events{
+            white-space: nowrap;
+            height: 390px;
+            max-height: 390px !important;
+        }
+        .scroll-programs{
+            white-space: nowrap;
+            height: 425px;
+            max-height: 425px !important;
+        }
+        .card-img-news {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            min-height: 360px;
+    
+         }
+         .card-img-events {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 360px;
+         }
+         .card-img-programs {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 360px;
+         }
+    }
+}

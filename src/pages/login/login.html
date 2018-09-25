@@ -1,0 +1,16 @@
+<ion-content padding>
+  <div text-center>
+    <h1>STI GO</h1>
+    <p>Sign in to STI GO to get the latest news, events and sign in for online attendance via your phone.</p>
+
+    <button (click)="googleSignIn()" ion-button icon-start color="googleWhite" style="text-transform: none; margin-bottom: 8px;" full>
+      <ion-icon name="logo-googleplus" color="danger"></ion-icon>
+      Continue with Google
+    </button>
+    <button (click)="facebookSignIn()"  ion-button icon-start color="facebookBlue" style="text-transform: none" full>
+      <ion-icon name="logo-facebook" color="googleWhite"></ion-icon>
+      Continue with Facebook
+    </button>
+    <!-- <button ion-button (click)="signOut()">Log out</button> -->
+  </div>
+</ion-content>

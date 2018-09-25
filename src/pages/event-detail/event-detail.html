@@ -1,0 +1,56 @@
+<!--
+  Generated template for the EventDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="googleWhite">
+    <ion-title>Event Detail Page</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content *ngIf="eventDocument">
+  <div>
+    <img class="img" src="https://www.sti.edu/img/banners/tourism.jpg" />
+    <div padding-left>
+
+      <h3 class="title">{{eventDocument.event_name}}</h3>
+
+      <div class="grey">
+        <ion-icon name="time"></ion-icon>
+        <label>{{eventDocument.event_date}}</label>
+      </div>
+      <div class="grey">
+        <ion-icon name="pin"></ion-icon>
+        <label>{{eventDocument.event_location}}</label>
+      </div>
+      <!-- <p class="content">{{ newsDocument.news_content }}</p> -->
+      <!-- <button ion-button color="primary" (click)="hostAttendance()">Attendance Host</button>
+      <button ion-button color="secondary" (click)="signForAttendance()">Sign for attendance</button> -->
+    </div>
+  </div>
+  <ion-fab *ngIf="isStudent" bottom right padding>
+    <button ion-fab>
+      <ion-icon name="create"></ion-icon>
+    </button>
+    <ion-fab-list side="top" padding>
+        <button ion-fab (click)="hostAttendance()"><ion-icon name="log-in"></ion-icon></button>
+        <button ion-fab (click)="stopHostingAttendance()"><ion-icon name="log-out"></ion-icon></button>
+  
+      </ion-fab-list>
+  </ion-fab>
+  <ion-fab *ngIf="isSBG" bottom right padding>
+    <button color="accent" ion-fab>
+      <ion-icon name="wifi"></ion-icon>
+    </button>
+    <ion-fab-list side="top" padding>
+      <button ion-fab (click)="hostAttendance()"><ion-icon name="play"></ion-icon></button>
+      <button ion-fab (click)="stopHostingAttendance()"><ion-icon name="square"></ion-icon></button>
+
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
