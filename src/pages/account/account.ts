@@ -17,12 +17,39 @@ import { AuthProvider } from './../../providers/auth/auth';
   templateUrl: 'account.html',
 })
 export class AccountPage {
-
+  userDocRef: any;
+  userDoc: any;
+  isStudent: boolean =false;
+  notice:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private authProvider: AuthProvider
     ) {
+      this.authProvider.user$.subscribe(user => {
+        if(user.user_type == 'Student'){
+          this.isStudent = true;
+          console.log(user.user_type);
+          this.notice = 'You have already registered as a student.'
+      
+        }
+        else if(user.user_type == 'SBG'){
+          this.isStudent = true;
+          console.log(user.user_type);
+          this.notice = 'You have already registered as a student, SBG officer.'
+      
+        }
+        else if(user.user_type == 'Admin'){
+          this.isStudent = true;
+          console.log(user.user_type);
+          this.notice = 'Welcome, admin.'
+      
+        }  
+        else{
+          this.isStudent = false;
+          this.notice ='Register account as student';
+        }
+      })
   }
 
   ionViewDidLoad() {

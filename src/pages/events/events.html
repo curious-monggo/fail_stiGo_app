@@ -28,7 +28,7 @@
 
 <ion-content>
   <div class="card-background-page" *ngFor="let eventDocument of eventCollection">
-    <ion-card (click)="goToEventDetail(eventDocument.id)">
+    <ion-card (click)="goToEventDetail(eventDocument.id,eventDocument.event_timestamp_post_created)">
         <!-- <img src="https://www.sti.edu/img/banners/tourism.jpg"/> -->
         <div class="card-img-event" [style.background-image]="'url(' + 'https://www.sti.edu/img/banners/tourism.jpg' + ')'"></div>
         <div class="card-title">{{eventDocument.event_name}}</div>

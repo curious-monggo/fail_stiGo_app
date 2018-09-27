@@ -13,7 +13,7 @@ import { RegistrationCode } from './../../models/registration-code/registration-
 import { AuthProvider } from './../auth/auth';
 import { User } from './../../models/user/user';
 
-
+import { AngularFireFunctions } from '@angular/fire/functions';
 /*
   Generated class for the RegistrationCodeProvider provider.
 
@@ -29,10 +29,11 @@ export class RegistrationCodeProvider {
 	//object variables
 	userDocumentRef: AngularFirestoreDocument<User>;
   userDocument: Observable<User>;
-
+  data$:Observable<any>;
 
   constructor(
     private afDb: AngularFirestore,
+    private afFns: AngularFireFunctions,
     private authProvider: AuthProvider
   ) {
     console.log('Hello RegistrationCodeProvider Provider');
@@ -40,29 +41,11 @@ export class RegistrationCodeProvider {
   }
 
   checkIfRegistrationCodeExists(userTypedCode:string){
-    console.log('user typed code',userTypedCode);
-    this.registrationCodeCollectionRef = this.afDb.collection('registration-code', 
-    ref => ref.where('registration_code', '==', userTypedCode));
-    this.registrationCodeCollection = this.registrationCodeCollectionRef.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as RegistrationCode;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })), 
-    );
-    return this.registrationCodeCollection;
-  }
-  registerUserAsStudent(){
-    let userUid = this.authProvider.userUid;
-    console.log(userUid);
-    this.userDocumentRef = this.afDb.doc(`users/${userUid}`);
-    this.userDocumentRef.update({user_type: 'student'})
-    // let test = this.afDb.collection(`attendance/eventid/bsit`);
-    // let user = {
-    //   name:'name',
-    //   signIn:'time in',
-    //   signOut:'time out'
-    // }
-    // test.add({user});
+    const callable = this.afFns.httpsCallable('registerUserAsStudent');
+    this.data$ = callable({userTypedCode: userTypedCode});
+    this.data$.subscribe(data => {
+      console.log('observable: ', data);
+    });
+
   }
 }

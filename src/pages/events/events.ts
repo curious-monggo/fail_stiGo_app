@@ -46,9 +46,10 @@ export class EventsPage {
       console.log(eventCollection);
     });
   }
-  goToEventDetail(eventsDocumentId){
+  goToEventDetail(eventsDocumentId, timestamp){
     this.navCtrl.push('EventDetailPage', {
-      id: eventsDocumentId
+      id: eventsDocumentId,
+      timestamp:timestamp
     });
   }
 }

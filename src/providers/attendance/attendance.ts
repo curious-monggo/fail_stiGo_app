@@ -36,19 +36,23 @@ export class AttendanceProvider {
 
 
 
-  signInForAttendance(eventId, userObj) {
+  signInForAttendance(eventId, userObj, dateTimeNow) {
     this.attendanceDocumentRef = this.afDb.doc(`attendance/${eventId}/${userObj.student_program}/${userObj.student_id_number}`);
     let attendance = {
+      student_first_name: userObj.student_first_name,
+      student_last_name: userObj.student_last_name,
       signIn: true,
-      signOut: false
+      signIn_datetimestamp: dateTimeNow
     };
     this.attendanceDocumentRef.set(attendance, {merge:true});
   }
-  signOutForAttendance(eventId, userObj) {
+  signOutForAttendance(eventId, userObj, dateTimeNow) {
     this.attendanceDocumentRef = this.afDb.doc(`attendance/${eventId}/${userObj.student_program}/${userObj.student_id_number}`);
     let attendance = {
-      signIn: true,
-      signOut: true
+      student_first_name: userObj.student_first_name,
+      student_last_name: userObj.student_last_name,
+      signOut: true,
+      signOut_datetimestamp: dateTimeNow
     };
     this.attendanceDocumentRef.set(attendance, {merge:true});
   }
@@ -103,5 +107,9 @@ export class AttendanceProvider {
   //   };
   //   let ref = this.afDb.collection(`attendance/${eventId}/bsit`).add(attendance);
   // }
-
+  getAttendanceList(eventId, program){
+    this.attendanceCollectionRef = this.afDb.collection(`attendance/${eventId}/${program}`);
+    this.attendanceCollection = this.attendanceCollectionRef.valueChanges();
+    return this.attendanceCollection;
+  }
 }

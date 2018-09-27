@@ -11,6 +11,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
+
 import { NewsProvider } from '../providers/news/news';
 import { CourseProvider } from '../providers/course/course';
 import { StrandProvider } from '../providers/strand/strand';
@@ -53,6 +56,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
+    AngularFireFunctionsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -10,13 +10,13 @@
     <ion-title>Attendance List</ion-title>
   </ion-navbar>
   <div>
-      <ion-segment  color="primary">
-        <ion-segment-button value="kittens">
+      <ion-segment [(ngModel)]="programType"  color="primary">
+        <ion-segment-button value="BSIT">
           BSIT
         </ion-segment-button>
-        <ion-segment-button value="puppies">
+        <!-- <ion-segment-button value="puppies">
           BSAT
-        </ion-segment-button>
+        </ion-segment-button> -->
       </ion-segment>
     </div>
     
@@ -24,5 +24,30 @@
 
 
 <ion-content padding>
+  <div [ngSwitch]="programType">
+    <div *ngFor="let l of list" >
+      <ion-list>
+        <ion-item>
+          <!-- <ion-thumbnail item-start>
+            <img src="img/thumbnail-puppy-1.jpg">
+          </ion-thumbnail> -->
+          <h2 *ngIf="l.student_first_name">{{l.student_first_name}} {{l.student_last_name}}</h2>
+          <p *ngIf="l.signIn">Sign in: {{l.signIn_datetimestamp}}</p>
+          <p *ngIf="l.signOut">Sign out: {{l.signOut_datetimestamp}}</p>
+          
+        </ion-item>
+      </ion-list>
+    </div>
 
+  
+    <!-- <ion-list *ngSwitchCase="'kittens'">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="img/thumbnail-kitten-1.jpg">
+        </ion-thumbnail>
+        <h2>Luna</h2>
+      </ion-item>
+      ...
+    </ion-list> -->
+  </div>
 </ion-content>

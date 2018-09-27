@@ -21,13 +21,18 @@
       <h3 class="title">{{eventDocument.event_name}}</h3>
 
       <div class="grey">
-        <ion-icon name="time"></ion-icon>
+        <ion-icon name="calendar"></ion-icon>
         <label>{{eventDocument.event_date}}</label>
+      </div>
+      <div class="grey">
+        <ion-icon name="time"></ion-icon>
+        <label>{{eventDocument.event_time_start}} - {{eventDocument.event_time_end}}</label>
       </div>
       <div class="grey">
         <ion-icon name="pin"></ion-icon>
         <label>{{eventDocument.event_location}}</label>
       </div>
+      <button ion-button (click)="openAttendancePage()">List</button>
       <!-- <p class="content">{{ newsDocument.news_content }}</p> -->
       <!-- <button ion-button color="primary" (click)="hostAttendance()">Attendance Host</button>
       <button ion-button color="secondary" (click)="signForAttendance()">Sign for attendance</button> -->
@@ -38,8 +43,8 @@
       <ion-icon name="create"></ion-icon>
     </button>
     <ion-fab-list side="top" padding>
-        <button ion-fab (click)="hostAttendance()"><ion-icon name="log-in"></ion-icon></button>
-        <button ion-fab (click)="stopHostingAttendance()"><ion-icon name="log-out"></ion-icon></button>
+        <button ion-fab (click)="signInButtonClicked()"><ion-icon name="log-in"></ion-icon></button>
+        <button ion-fab (click)="signOutButtonClicked()"><ion-icon name="log-out"></ion-icon></button>
   
       </ion-fab-list>
   </ion-fab>
