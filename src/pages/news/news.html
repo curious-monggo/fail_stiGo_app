@@ -33,7 +33,7 @@
             <h2>{{newsDocument.news_author_name}}</h2>
             <p>{{newsDocument.news_timestamp_post_created?.toDate() | date: 'medium' }}</p>
           </ion-item>
-        <div class="card-img-news" [style.background-image]="'url(' + newsDocument.news_photo_url + ')'"></div>
+        <div *ngIf="newsDocument.news_photo_url" class="card-img-news" [style.background-image]="'url(' + newsDocument.news_photo_url + ')'"></div>
         <ion-card-content>
           <p>
               {{newsDocument.news_title| slice: 0: 145}} ...

@@ -56,7 +56,12 @@ export class AccountPage {
     console.log('ionViewDidLoad AccountPage');
   }
   goToRegistrationCodePage(){
-    this.navCtrl.push('RegistrationCodePage');
+    if(this.isStudent == true){
+    }
+    else{
+      this.navCtrl.push('RegistrationCodePage');
+    }
+
   }
   signOut(){
     this.authProvider.signOut();

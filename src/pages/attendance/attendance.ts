@@ -15,10 +15,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'attendance.html',
 })
 export class AttendancePage {
-  programType="BSIT";
+  programType;
   eventDocumentId;
   program;
-  list
+  attendanceList;
+  programsList;
   constructor(public navCtrl: NavController, public navParams: NavParams, private attendanceProvider: AttendanceProvider) {
     
   }
@@ -27,13 +28,29 @@ export class AttendancePage {
     console.log('ionViewDidLoad AttendancePage');
     this.eventDocumentId = this.navParams.get('eventId');
     this.program = this.navParams.get('programType');
-    this.getList();
+
+    //this.getList();
+    this.getProgramsCoursesAttended();
+
     
   }
-  getList(){
-    this.attendanceProvider.getAttendanceList(this.eventDocumentId, this.program).subscribe(list => {
-      console.log(list);
-      this.list = list;
+  ionViewDidEnter(){
+   
+  }
+  getList(program){
+    this.attendanceProvider.getAttendanceCourseList(this.eventDocumentId, program).subscribe(attendanceList => {
+      console.log(attendanceList);
+      this.attendanceList = attendanceList;
+      this.programType = program;
+    });
+  }
+
+  getProgramsCoursesAttended(){
+    this.attendanceProvider.getProgramsCoursesAttended().subscribe(available_courses => {
+      console.log(available_courses);
+      this.programsList = available_courses.currently_available_courses;
+      // this.programType = this.programsList[0];
+      console.log(this.programsList);
     });
   }
 

@@ -15,7 +15,7 @@
 
 <ion-content >
   <div *ngIf="newsDocument">
-      <img class="img" src="{{ newsDocument.news_photo_url }}" />
+      <img *ngIf="newsDocument.news_photo_url" class="img" src="{{ newsDocument.news_photo_url }}" />
       <div padding>
         <p class="date" *ngIf="newsDocument.news_timestamp_post_created">Date time created: {{ newsDocument.news_timestamp_post_created?.toDate() | date: 'medium'  }}</p>
         <p class="date" *ngIf="newsDocument.news_timestamp_post_last_updated">Last updated: {{ newsDocument.news_timestamp_post_last_updated?.toDate() | date: 'medium'  }}</p>

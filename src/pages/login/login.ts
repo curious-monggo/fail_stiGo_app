@@ -17,6 +17,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  userObj = {
+    user_name: '',
+    user_email:'',
+    user_photo_url: '',
+    user_type:''
+  };
+  userKey;
 
   displayName;
   constructor(
@@ -27,7 +34,12 @@ export class LoginPage {
   ) {
       this.afAuth.authState.subscribe(user =>{
         if(user){
-          this.navCtrl.setRoot('TabsPage');
+          this.userObj.user_name = user.displayName;
+          this.userObj.user_email = user.email;
+          this.userObj.user_photo_url = user.photoURL;
+          this.userKey = user.uid;
+          this.authProvider.addUserDocument(this.userKey, this.userObj);
+          this.navCtrl.pop();
         } else {
           console.log('Error on login, stay there');
         }
@@ -49,7 +61,5 @@ export class LoginPage {
   goToHome(){
     this.navCtrl.setRoot('TabsPage');
   }
-  // signOut(){
-  //   this.authProvider.signOut();
-  // }
+  
 }

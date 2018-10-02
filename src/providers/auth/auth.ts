@@ -85,4 +85,29 @@ export class AuthProvider {
     console.log(this.displayName);
   }
 
+  addUserDocument(userID:string, userDocument){
+    let userDocumentRef = this.afDb.doc(`users/${userID}`);
+    let userD = userDocumentRef.valueChanges();
+    userD.subscribe((userDoc) => {
+      if(userDoc){
+        console.log('Old user');
+        if(userDoc !== userDocument){
+        //mahal to
+        const user = {
+          user_email: userDocument.user_email,
+          user_name: userDocument.user_name,
+          user_photo_url: userDocument.user_photo_url
+        };
+        userDocumentRef.update(user);
+        }
+      }
+      else {
+        console.log('New user');
+        userDocument.user_type = 'Member';
+        console.log(userDocument)
+        userDocumentRef.set(userDocument, {merge:true});
+      }
+    });
+  } 
+
 }

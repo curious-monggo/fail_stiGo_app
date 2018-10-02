@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 
 
@@ -7,6 +8,9 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators'; 
 
+// import * as firebase from 'firebase';
+
+// declare var firebase:any;
 
 /*
   Generated class for the AttendanceProvider provider.
@@ -34,9 +38,8 @@ export class AttendanceProvider {
     return this.attendanceDocument;
   }
 
-
-
   signInForAttendance(eventId, userObj, dateTimeNow) {
+
     this.attendanceDocumentRef = this.afDb.doc(`attendance/${eventId}/${userObj.student_program}/${userObj.student_id_number}`);
     let attendance = {
       student_first_name: userObj.student_first_name,
@@ -46,6 +49,7 @@ export class AttendanceProvider {
     };
     this.attendanceDocumentRef.set(attendance, {merge:true});
   }
+
   signOutForAttendance(eventId, userObj, dateTimeNow) {
     this.attendanceDocumentRef = this.afDb.doc(`attendance/${eventId}/${userObj.student_program}/${userObj.student_id_number}`);
     let attendance = {
@@ -56,60 +60,48 @@ export class AttendanceProvider {
     };
     this.attendanceDocumentRef.set(attendance, {merge:true});
   }
+
   checkAttendanceStatus(eventId, userObj){
     this.attendanceDocumentRef = this.afDb
       .doc(`attendance/${eventId}/${userObj.student_program}/${userObj.student_id_number}`);
-    this.attendanceDocument = this.attendanceDocumentRef.valueChanges();
+    this.attendanceDocument = this.attendanceDocumentRef.snapshotChanges().pipe(
+      map(action => {
+        const data = action.payload.data();
+        const id = action.payload.id;
+        const metadata = action.payload.metadata;
+        return { id, metadata, ...data };
+      })
+    );
     return this.attendanceDocument;
   }
-  // checkIfUserIsAttendanceHost(id:string){
-  //   this.attendanceHostsDocumentRef = this.afDb.doc(`attendanceHosts/${id}`);
-  //   this.attendanceHostsDocument = this.attendanceHostsDocumentRef.valueChanges();
-  //   this.attendanceHostsDocument.subscribe((attendanceHostDoc => {
-  //     if(attendanceHostDoc){
-  //       //meron
-  //       //allow attendance hosting
-  //       this.isUserAnAttendanceHost == true;
-  //     }
-  //     else{
-  //       //wala
-  //       this.isUserAnAttendanceHost == false;
-  //     }
-  //   }), onError => {
-  //     console.log(onError);
-  //   });
-  //   // this.attendanceHostsCollectionRef = this.afDb.collection('attendanceHosts', ref => ref.where('user_type.', 'array-contains'))
-  // }
-  // checkIfUserIsAttendee(id:string){
-  //   this.attendeeDocumentRef = this.afDb.doc(`users/${id}`);
-  //   this.attendeeDocument = this.attendeeDocumentRef.valueChanges();
-  //   this.attendeeDocument.subscribe((attendeeDoc => {
-  //     if(attendeeDoc.student_id){
 
-  //       this.isUserAnAttendee == true;
-  //     }
-  //     else{
-  //       //wala
-  //       this.isUserAnAttendee == false;
-  //     }
-  //   }), onError => {
-  //     console.log(onError);
-  //   });
-  //   // this.attendanceHostsCollectionRef = this.afDb.collection('attendanceHosts', ref => ref.where('user_type.', 'array-contains'))
-  // }
-
-  // signForAttendance(){
-  //   let eventId= 'eventid';
-  //   let attendance = {
-      
-  //     studentId: '123',
-  //     student: 'name'
-  //   };
-  //   let ref = this.afDb.collection(`attendance/${eventId}/bsit`).add(attendance);
-  // }
   getAttendanceList(eventId, program){
-    this.attendanceCollectionRef = this.afDb.collection(`attendance/${eventId}/${program}`);
+    this.attendanceCollectionRef = this.afDb.collection(`attendance/${eventId}/${program}`, ref => ref.orderBy('student_last_name'));
     this.attendanceCollection = this.attendanceCollectionRef.valueChanges();
     return this.attendanceCollection;
   }
+
+  getAttendanceCourseList(eventId, program){
+    this.attendanceCollectionRef = this.afDb.collection(`attendance/${eventId}/${program}`, ref => ref.orderBy('student_last_name'));
+    // this.attendanceCollection = this.attendanceCollectionRef.valueChanges();
+    // return this.attendanceCollection;
+    this.attendanceCollection = this.attendanceCollectionRef.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        const metadata = a.payload.doc.metadata;
+      //  const doc = a.payload.doc;
+        return { id,metadata, ...data };
+      }))
+    );
+    return this.attendanceCollection;
+
+  }
+
+  getProgramsCoursesAttended(){
+    this.attendanceDocumentRef = this.afDb.doc(`available_programs/courses`);
+    this.attendanceDocument = this.attendanceDocumentRef.valueChanges();
+    return this.attendanceDocument;
+  }
+
 }
