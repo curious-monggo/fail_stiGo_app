@@ -31,14 +31,14 @@ export class EventsPage {
     private eventProvider: EventProvider,
     private afAuth: AngularFireAuth
     ) {
-
+      this.getLatestEventCollection();
   }
   goToAccountPage(){
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventsPage');
-    this.getLatestEventCollection();
+
   }
   getLatestEventCollection(){
     this.eventProvider.getLatestEventCollection().subscribe(eventCollection => {

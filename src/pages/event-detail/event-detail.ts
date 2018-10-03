@@ -10,6 +10,8 @@ import { HotspotProvider } from './../../providers/hotspot/hotspot';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EventProvider } from '../../providers/event/event';
 
+declare let WifiWizard: any;
+
 @IonicPage()
 @Component({
   selector: 'page-event-detail',
@@ -130,42 +132,43 @@ export class EventDetailPage {
       console.log(this.statusSignOut);
       this.checkDateTimeBeforeSignIn();
     }
-    else if (this.statusSignIn.signIn == true 
-          && this.statusSignIn.signOut == undefined
-          && this.statusSignIn.metadata.hasPendingWrites == false) {
-     // this.checkStatusSubscriptionSignIn.unsubscribe();
+    else if (this.statusSignIn.signIn == true
+      && this.statusSignIn.signOut == undefined
+      && this.statusSignIn.metadata.hasPendingWrites == false) {
+      // this.checkStatusSubscriptionSignIn.unsubscribe();
       this.alert('You have already signed in!', 'Please click the sign out button once the event ends, thank you!', 'Ok');
       //this.checkDateTimeBeforeSignOut();
     }
-    else if (this.statusSignIn.signIn == true 
+    else if (this.statusSignIn.signIn == true
       && this.statusSignIn.signOut == undefined
       && this.statusSignIn.metadata.hasPendingWrites == true) {
- // this.checkStatusSubscriptionSignIn.unsubscribe();
-  this.alert('Sign in was saved to device!', 'Please connect to the internet to send your attendance sign in, thank you!', 'Ok');
-  //this.checkDateTimeBeforeSignOut();
-}
-    else if (this.statusSignIn.signIn == true 
-          && this.statusSignIn.signOut == true
-          && this.statusSignIn.metadata.hasPendingWrites == false ) {
+      // this.checkStatusSubscriptionSignIn.unsubscribe();
+      this.alert('Sign in was saved to device!', 'Please connect to the internet to send your attendance sign in, thank you!', 'Ok');
+      //this.checkDateTimeBeforeSignOut();
+    }
+    else if (this.statusSignIn.signIn == true
+      && this.statusSignIn.signOut == true
+      && this.statusSignIn.metadata.hasPendingWrites == false) {
       this.isAttendanceFinished = true;
-    //  this.checkStatusSubscriptionSignIn.unsubscribe();
+      //  this.checkStatusSubscriptionSignIn.unsubscribe();
       this.openAttendancePage();
       this.alert(
         'You have already finished signing in and out!',
         'Thank you for reconfirming',
         'Ok');
     }
-    else if (this.statusSignIn.signIn == true 
-          && this.statusSignIn.signOut == true
-          && this.statusSignIn.metadata.hasPendingWrites == true ) {
-   this.isAttendanceFinished = true;
- //  this.checkStatusSubscriptionSignIn.unsubscribe();
-   this.openAttendancePage();
-   this.alert(
-     'Attendance sign in/out still not saved on cloud!',
-     'Please connect to the internet to send your finished attendance information, thank you!',
-     'Ok');
- }
+    else if (this.statusSignIn.signIn == true
+      && this.statusSignIn.signOut == true
+      && this.statusSignIn.metadata.hasPendingWrites == true
+      || this.statusSignIn.metadata.hasPendingWrites == undefined) {
+      this.isAttendanceFinished = true;
+      //  this.checkStatusSubscriptionSignIn.unsubscribe();
+      this.openAttendancePage();
+      this.alert(
+        'Attendance sign in/out still not saved on cloud!',
+        'Please connect to the internet to send your finished attendance information, thank you!',
+        'Ok');
+    }
     console.log(this.isAttendanceFinished)
   }
 
@@ -177,19 +180,19 @@ export class EventDetailPage {
     if (this.statusSignOut == undefined) {
       console.log(this.statusSignOut);
       // this.checkDateTimeBeforeSignIn();
-     // this.checkStatusSubscriptionSignOut.unsubscribe();
+      // this.checkStatusSubscriptionSignOut.unsubscribe();
       this.alert('You still have not signed in!', 'Please click the sign in button, thank you!', 'Ok');
     }
-    else if (this.statusSignOut.signIn == true 
-          && this.statusSignOut.signOut == undefined
-          ) {
+    else if (this.statusSignOut.signIn == true
+      && this.statusSignOut.signOut == undefined
+    ) {
       //this.alert('You have already signed in!', 'Please click the sign out button once the event ends, thank you!', 'Ok');
       this.checkDateTimeBeforeSignOut();
     }
-    else if (this.statusSignOut.signIn == true 
-          && this.statusSignOut.signOut == true
-          && this.statusSignOut.metadata.hasPendingWrites == false) {
-     // this.checkStatusSubscriptionSignOut.unsubscribe();
+    else if (this.statusSignOut.signIn == true
+      && this.statusSignOut.signOut == true
+      && this.statusSignOut.metadata.hasPendingWrites == false) {
+      // this.checkStatusSubscriptionSignOut.unsubscribe();
       this.isAttendanceFinished = true;
       this.openAttendancePage();
       this.alert(
@@ -197,75 +200,87 @@ export class EventDetailPage {
         'Thank you for reconfirming!',
         'Ok');
     }
-    else if (this.statusSignOut.signIn == true 
+    else if (this.statusSignOut.signIn == true
       && this.statusSignOut.signOut == true
-      && this.statusSignOut.metadata.hasPendingWrites == true) {
- // this.checkStatusSubscriptionSignOut.unsubscribe();
-  this.isAttendanceFinished = true;
-  this.openAttendancePage();
-  this.alert(
-    'Attendance sign in/out still not saved on cloud!',
-    'Please connect to the internet to send your finished attendance information, thank you!',
-    'Ok');
+      && this.statusSignOut.metadata.hasPendingWrites == true
+      || this.statusSignOut.metadata.hasPendingWrites == undefined) {
+      // this.checkStatusSubscriptionSignOut.unsubscribe();
+      this.isAttendanceFinished = true;
+      this.openAttendancePage();
+      this.alert(
+        'Attendance sign in/out still not saved on cloud!',
+        'Please connect to the internet to send your finished attendance information, thank you!',
+        'Ok');
     }
     console.log(this.isAttendanceFinished)
   }
 
   checkDateTimeBeforeSignIn() {
-    let now = new Date();
-    let nowTime = now.getTime();
+    let now = new Date().toLocaleString('en-PH');
+    // let nowTime = now.toLocaleString('en-PH');
     let eventStart = new Date(
       `${this.attendanceParameters.attendance_event_date}, 
-       ${this.attendanceParameters.attendance_time_start}`).getTime();
+       ${this.attendanceParameters.attendance_time_start}`).toLocaleString('en-PH');
     let eventEnd = new Date(
       `${this.attendanceParameters.attendance_event_date}, 
-       ${this.attendanceParameters.attendance_time_end}`).getTime();
+       ${this.attendanceParameters.attendance_time_end}`).toLocaleString('en-PH');
     console.log(eventStart, eventEnd)
-    if (nowTime >= eventStart && nowTime <= eventEnd) {
+    if (now >= eventStart && now <= eventEnd) {
       console.log('Sign in pwede');
       //connect to host
-      this.connectToHostSignIn(now.toLocaleString('en-PH'));
+      this.connectToHostSignIn(now);
     }
-    else if (nowTime > eventEnd) {
+    else if (now > eventEnd) {
       console.log('event has ended, you may now try to sign out', now);
       this.alert('Event has already ended', 'Only signout is available, please try clicking the sign out button', 'OK');
     }
-    else if (nowTime < eventStart) {
+    else if (now < eventStart) {
       this.alert('Event has not yet started', 'Please wait until the event starts, thank you!', 'Ok');
     }
   }
 
   checkDateTimeBeforeSignOut() {
-    let now = new Date();
-    let nowTime = now.getTime();
+    let now = new Date().toLocaleString('en-PH');
+    //let nowTime = now.toLocaleString('en-PH');
     let eventStart = new Date(
       `${this.attendanceParameters.attendance_event_date}, 
-       ${this.attendanceParameters.attendance_time_start}`).getTime();
+       ${this.attendanceParameters.attendance_time_start}`).toLocaleString('en-PH');
     let eventEnd = new Date(
       `${this.attendanceParameters.attendance_event_date}, 
-       ${this.attendanceParameters.attendance_time_end}`).getTime();
-    if (nowTime >= eventStart && nowTime <= eventEnd) {
+       ${this.attendanceParameters.attendance_time_end}`).toLocaleString('en-PH');
+    if (now >= eventStart && now <= eventEnd) {
       console.log('Di pwede, ongoing yung event');
       this.alert('The event is still ongoing...', 'You can only sign out once the event ends, thank you!', 'Ok');
     }
-    else if (nowTime > eventEnd) {
+    else if (now > eventEnd) {
       console.log('event has ended, you may now try to sign out', now);
-      this.connectToHostSignOut(now.toLocaleString('en-PH'));
+      this.connectToHostSignOut(now);
       //this.alert('Event has already ended', 'Only signout is available, please try clicking the sign out button', 'OK');
     }
-    else if (nowTime < eventStart) {
+    else if (now < eventStart) {
       this.alert('Event has not yet started', 'Please wait until event has concluded, thank you!', 'Ok');
     }
   }
   signInButtonClicked() {
-    this.loading('Connecting to database...');
+    //this.connectToHostSignIn('test');
+
+
+    this.loading('Checking attendance status...');
     this.checkAttendanceStatusSignIn(this.eventDocumentId, this.userObj);
+    // let now = new Date().toLocaleString('en-PH');
+    // this.connectToHostSignIn(now);
     this.loadingComponent.dismiss();
   }
   signOutButtonClicked() {
-    this.loading('Connecting to database...');
-    console.log(this.eventDocumentId, this.userObj);
+    //this.connectToHostSignOut('test');
+
+
+
+    this.loading('Checking attendance status...');
+    // console.log(this.eventDocumentId, this.userObj);
     this.checkAttendanceStatusSignOut(this.eventDocumentId, this.userObj);
+    // // let now = new Date().toLocaleString('en-PH');
+    // // this.connectToHostSignOut(now);
     this.loadingComponent.dismiss();
   }
   signInForAttendance(dateTimeNow) {
@@ -295,55 +310,198 @@ export class EventDetailPage {
   }
   //connect
   connectToHostSignIn(dateTimeNow) {
-    this.hotspot.connectToWifi(
-      `${this.attendanceParameters.attendance_event_name}:IN`,
-      this.attendanceParameters.attendance_password)
-      .then((onConnectToHotspotSuccess => {
-        console.log(onConnectToHotspotSuccess);
-        this.hotspot.removeWifiNetwork(`${this.attendanceParameters.attendance_event_name}:IN`).then((onRemoveSuccess => {
-          this.signInForAttendance(dateTimeNow);
-        }));
-      }),
-        onRejected => {
-          console.log(onRejected);
-          this.alert(
-            'Unable to connect to host',
-            'You might be out of reach, please try going closer to the host, if this persists then the app might not support your device as of now',
-            'OK'
-          );
-        })
+    let config = WifiWizard.formatWifiConfig(
+      `${this.attendanceParameters.attendance_event_name}:IN`, 
+      this.attendanceParameters.attendance_password, 
+      'WPA');
+    console.log('addwifi config', config);
+    WifiWizard.addNetwork(
+        config,
+        scc => {
+          //this.alert('Add network a success', `msg${scc}`, 'ok');
+          WifiWizard.connectNetwork(`${this.attendanceParameters.attendance_event_name}:IN`,
+          win =>{
+            //this.alert('connect to network success', `msg${win}`, 'ok');
+            WifiWizard.removeNetwork(`${this.attendanceParameters.attendance_event_name}:IN`,
+            win => {
+              //this.alert('onremove success', `msg${win}`,'ok');
+              this.signInForAttendance(dateTimeNow);
+            },
+            err => {
+              this.alert('onremove err', `msg${err}`,'ok');
+            });
+          },
+          fail => {
+            this.alert('connect to network unsuccessfull', `msg${fail}`, 'ok');
+          });
+        },
+        err => {
+          this.alert('Add network unsuccessfull', `msg${err}`, 'ok')
+        }
+    );
+
+
+
+
+    // WifiWizard2.connect(
+    //   `${this.attendanceParameters.attendance_event_name}:IN`,
+    //   true,
+    //   this.attendanceParameters.attendance_password,
+    //   'WPA',
+    //   false
+    // ).then(onSuccessConnect => {
+    //   if(onSuccessConnect){
+    //     WifiWizard2.disconnect(`${this.attendanceParameters.attendance_event_name}:IN`)
+    //       .then(onSuccessDisconnect =>{
+    //       if(onSuccessDisconnect){
+    //         this.signInForAttendance(dateTimeNow);
+    //       }
+    //       else{
+    //         this.alert(
+    //           'Unable to disconnect to host, err: '+onSuccessDisconnect,
+    //           'Please manually disconnect',
+    //           'OK'
+    //         );
+    //       }
+    //     })
+    //   }
+    //   else{
+    //       this.alert(
+    //         'Unable to connect to host, err: '+onSuccessConnect,
+    //         'You might be out of reach, please try going closer to the host, if this persists then the app might not support your device as of now',
+    //         'OK'
+    //       );
+    //   }
+    // })  
+
+
+
+
+
+    // this.hotspot.connectToWifi(
+    //   `${this.attendanceParameters.attendance_event_name}:IN`,
+    //   this.attendanceParameters.attendance_password)
+    //   .then((onConnectToHotspotSuccess => {
+    //     console.log(onConnectToHotspotSuccess);
+    //     this.hotspot.removeWifiNetwork(`${this.attendanceParameters.attendance_event_name}:IN`).then((onRemoveSuccess => {
+    //       this.signInForAttendance(dateTimeNow);
+    //     }));
+    //   }),
+    //     onRejected => {
+    //       console.log(onRejected);
+    //       this.alert(
+    //         'Unable to connect to host, err: '+onRejected,
+    //         'You might be out of reach, please try going closer to the host, if this persists then the app might not support your device as of now',
+    //         'OK'
+    //       );
+    //     })
   }
   connectToHostSignOut(dateTimeNow) {
-    this.hotspot.connectToWifi(
-      `${this.attendanceParameters.attendance_event_name}:OUT`,
-      this.attendanceParameters.attendance_password)
-      .then((onConnectToHotspotSuccess => {
-        console.log(onConnectToHotspotSuccess);
-        this.hotspot.removeWifiNetwork(`${this.attendanceParameters.attendance_event_name}:OUT`).then((onRemoveSuccess => {
-          this.signOutForAttendance(dateTimeNow);
-        }));
-      }),
-      onRejected => {
-        console.log(onRejected);
-        this.alert(
-          'Unable to connect to host',
-          'You might be out of reach, please try going closer to the host, if this persists then the app might not support your device as of now',
-          'OK'
-        );
-      });
+    let config = WifiWizard.formatWifiConfig(
+      `${this.attendanceParameters.attendance_event_name}:OUT`, 
+      this.attendanceParameters.attendance_password, 
+      'WPA');
+    console.log('addwifi config', config);
+    WifiWizard.addNetwork(
+        config,
+        scc => {
+          //this.alert('Add network a success', `msg${scc}`, 'ok');
+          WifiWizard.connectNetwork(`${this.attendanceParameters.attendance_event_name}:OUT`,
+          win =>{
+            //this.alert('connect to network success', `msg${win}`, 'ok');
+            WifiWizard.removeNetwork(`${this.attendanceParameters.attendance_event_name}:OUT`,
+            win => {
+              //this.alert('onremove success', `msg${win}`,'ok');
+              this.signOutForAttendance(dateTimeNow);
+            },
+            err => {
+              this.alert('onremove err', `msg${err}`,'ok');
+            });
+          },
+          fail => {
+            this.alert('connect to network unsuccessfull', `msg${fail}`, 'ok');
+          });
+        },
+        err => {
+          this.alert('Add network unsuccessfull', `msg${err}`, 'ok')
+        }
+    );
+
+    // WifiWizard.removeNetwork('test',
+    // win => {
+    //   this.alert('onremove success', `msg${win}`,'ok');
+    // },
+    // err => {
+    //   this.alert('onremove err', `msg${err}`,'ok');
+    // });
+
+
+    // WifiWizard.connect(
+    //   'test',
+    //   true,
+    //   'password',
+    //   'WPA',
+    //   false
+    // );
+    
+    // .then(onSuccessConnect => {
+    //   if(onSuccessConnect){
+    //     WifiWizard2.disconnect(`${this.attendanceParameters.attendance_event_name}:OUT`)
+    //       .then(onSuccessDisconnect =>{
+    //       if(onSuccessDisconnect){
+    //         this.signInForAttendance(dateTimeNow);
+    //       }
+    //       else{
+    //         this.alert(
+    //           'Unable to disconnect to host, err: '+onSuccessDisconnect,
+    //           'Please manually disconnect',
+    //           'OK'
+    //         );
+    //       }
+    //     })
+    //   }
+    //   else{
+    //       this.alert(
+    //         'Unable to connect to host, err: '+onSuccessConnect,
+    //         'You might be out of reach, please try going closer to the host, if this persists then the app might not support your device as of now',
+    //         'OK'
+    //       );
+    //   }
+    // })  
+
+
+
+
+    // this.hotspot.connectToWifi(
+    //   `${this.attendanceParameters.attendance_event_name}:OUT`,
+    //   this.attendanceParameters.attendance_password)
+    //   .then((onConnectToHotspotSuccess => {
+    //     console.log(onConnectToHotspotSuccess);
+    //     this.hotspot.removeWifiNetwork(`${this.attendanceParameters.attendance_event_name}:OUT`).then((onRemoveSuccess => {
+    //       this.signOutForAttendance(dateTimeNow);
+    //     }));
+    //   }),
+    //     onRejected => {
+    //       console.log(onRejected);
+    //       this.alert(
+    //         'Unable to connect to host',
+    //         'You might be out of reach, please try going closer to the host, if this persists then the app might not support your device as of now',
+    //         'OK'
+    //       );
+    //     });
   }
 
 
 
   //hotspot
   hostAttendance() {
-    let now = new Date();
+    let now = new Date().toLocaleString('en-PH');
     let eventStart = new Date(
       `${this.attendanceParameters.attendance_event_date}, 
-       ${this.attendanceParameters.attendance_time_start}`);
+       ${this.attendanceParameters.attendance_time_start}`).toLocaleString('en-PH');
     let eventEnd = new Date(
       `${this.attendanceParameters.attendance_event_date}, 
-       ${this.attendanceParameters.attendance_time_end}`);
+       ${this.attendanceParameters.attendance_time_end}`).toLocaleString('en-PH');
     if (now >= eventStart && now <= eventEnd) {
       this.hostSignInAttendance();
     }

@@ -21,7 +21,7 @@ export class AttendancePage {
   attendanceList;
   programsList;
   constructor(public navCtrl: NavController, public navParams: NavParams, private attendanceProvider: AttendanceProvider) {
-    
+    this.getProgramsCoursesAttended();
   }
 
   ionViewDidLoad() {
@@ -30,7 +30,7 @@ export class AttendancePage {
     this.program = this.navParams.get('programType');
 
     //this.getList();
-    this.getProgramsCoursesAttended();
+
 
     
   }

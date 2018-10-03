@@ -26,33 +26,34 @@ export class AccountPage {
     public navParams: NavParams,
     private authProvider: AuthProvider
     ) {
-      this.authProvider.user$.subscribe(user => {
-        if(user.user_type == 'Student'){
-          this.isStudent = true;
-          console.log(user.user_type);
-          this.notice = 'You have already registered as a student.'
-      
-        }
-        else if(user.user_type == 'SBG'){
-          this.isStudent = true;
-          console.log(user.user_type);
-          this.notice = 'You have already registered as a student, SBG officer.'
-      
-        }
-        else if(user.user_type == 'Admin'){
-          this.isStudent = true;
-          console.log(user.user_type);
-          this.notice = 'Welcome, admin.'
-      
-        }  
-        else{
-          this.isStudent = false;
-          this.notice ='Register account as student';
-        }
-      })
+
   }
 
   ionViewDidLoad() {
+    this.authProvider.user$.subscribe(user => {
+      if(user.user_type == 'Student'){
+        this.isStudent = true;
+        console.log(user.user_type);
+        this.notice = 'You have already registered as a student.'
+    
+      }
+      else if(user.user_type == 'SBG'){
+        this.isStudent = true;
+        console.log(user.user_type);
+        this.notice = 'You have already registered as a student, SBG officer.'
+    
+      }
+      else if(user.user_type == 'Admin'){
+        this.isStudent = true;
+        console.log(user.user_type);
+        this.notice = 'Welcome, admin.'
+    
+      }  
+      else{
+        this.isStudent = false;
+        this.notice ='Register account as student';
+      }
+    })
     console.log('ionViewDidLoad AccountPage');
   }
   goToRegistrationCodePage(){

@@ -39,7 +39,8 @@ export class LoginPage {
           this.userObj.user_photo_url = user.photoURL;
           this.userKey = user.uid;
           this.authProvider.addUserDocument(this.userKey, this.userObj);
-          this.navCtrl.pop();
+          this.navCtrl.setRoot('TabsPage');
+          console.log('Add user');
         } else {
           console.log('Error on login, stay there');
         }
@@ -61,5 +62,5 @@ export class LoginPage {
   goToHome(){
     this.navCtrl.setRoot('TabsPage');
   }
-  
+
 }

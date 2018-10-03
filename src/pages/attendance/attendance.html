@@ -24,25 +24,28 @@
 
 
 <ion-content padding>
+
   <div [ngSwitch]="programType">
-    <div>
-      <div *ngSwitchCase="programType">
-        <ion-list *ngFor="let list of attendanceList">
-          <button ion-item>
-            <!-- <ion-avatar item-start>
-                    <img src="img/avatar-cher.png">
-                  </ion-avatar> -->
-            <h2>{{list?.student_first_name}} {{list?.student_last_name}}</h2>
-            <ion-icon *ngIf="list.metadata.hasPendingWrites" name="cloud-upload" color="accent" item-right></ion-icon>
-            <ion-icon *ngIf="!list.metadata.hasPendingWrites" name="cloud-done" color="primary" item-right></ion-icon>
-            <p *ngIf="list.signIn_datetimestamp" >Sign in: {{list?.signIn_datetimestamp}}</p>
-            <p *ngIf="list.signOut_datetimestamp" >Sign out: {{list?.signOut_datetimestamp}}</p>
-          </button>
-        </ion-list>
-      </div>
+
+    <div *ngSwitchCase="programType">
+      <ion-list>
+        <button ion-item *ngFor="let list of attendanceList">
+          <!-- <ion-avatar item-start>
+                        <img src="img/avatar-cher.png">
+                      </ion-avatar> -->
+          <h2>{{list?.student_first_name}} {{list?.student_last_name}}</h2>
+          <ion-icon *ngIf="list.metadata.hasPendingWrites" name="cloud-upload" color="accent" item-right></ion-icon>
+          <ion-icon *ngIf="!list.metadata.hasPendingWrites" name="cloud-done" color="primary" item-right></ion-icon>
+          <p *ngIf="list.signIn_datetimestamp">Sign in: {{list?.signIn_datetimestamp}}</p>
+          <p *ngIf="list.signOut_datetimestamp">Sign out: {{list?.signOut_datetimestamp}}</p>
+        </button>
+      </ion-list>
     </div>
 
+
   </div>
+
+
 
 
 </ion-content>
