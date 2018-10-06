@@ -23,21 +23,43 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'news.html',
 })
 export class NewsPage {
-  newsCollection:News[];
+  newsCollection: News[];
   newsDocumentId;
 
   displayName;
   photo_url;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private newsProvider: NewsProvider,
     private afAuth: AngularFireAuth
-    ) {
+  ) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.photo_url = user.photoURL;
+      }
+      else {
+        this.photo_url = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+      }
+    })
   }
 
+  onAccountPhotoClicked(){
+    this.afAuth.authState.subscribe(user => {
+      if(user){
+        this.goToAccountPage();
+      }
+      else{
+        this.goToLoginPage();
+      }
+    })
+  }
   goToAccountPage(){
+    this.navCtrl.push('AccountPage');
+  }
+  goToLoginPage(){
+    this.navCtrl.push('LoginPage');
   }
   ionViewDidLoad() {
     this.getNewsCollection();
@@ -49,10 +71,10 @@ export class NewsPage {
     });
   }
 
-  openNewsDetailPage(newsDocumentId){
+  openNewsDetailPage(newsDocumentId) {
     console.log(newsDocumentId);
     this.navCtrl.push('NewsDetailPage', {
-      id:newsDocumentId
+      id: newsDocumentId
     });
   }
 

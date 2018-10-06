@@ -44,6 +44,7 @@ export class AttendanceProvider {
     let attendance = {
       student_first_name: userObj.student_first_name,
       student_last_name: userObj.student_last_name,
+      student_year_level: userObj.student_year_level,
       signIn: true,
       signIn_datetimestamp: dateTimeNow
     };
@@ -55,6 +56,7 @@ export class AttendanceProvider {
     let attendance = {
       student_first_name: userObj.student_first_name,
       student_last_name: userObj.student_last_name,
+      student_year_level: userObj.student_year_level,
       signOut: true,
       signOut_datetimestamp: dateTimeNow
     };
@@ -77,7 +79,15 @@ export class AttendanceProvider {
 
   getAttendanceList(eventId, program){
     this.attendanceCollectionRef = this.afDb.collection(`attendance/${eventId}/${program}`, ref => ref.orderBy('student_last_name'));
-    this.attendanceCollection = this.attendanceCollectionRef.valueChanges();
+    this.attendanceCollection = this.attendanceCollectionRef.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        const metadata = a.payload.doc.metadata;
+      //  const doc = a.payload.doc;
+        return { id,metadata, ...data };
+      }))
+    );
     return this.attendanceCollection;
   }
 
@@ -97,11 +107,30 @@ export class AttendanceProvider {
     return this.attendanceCollection;
 
   }
+  getAttendanceStrandList(eventId, program){
+    this.attendanceCollectionRef = this.afDb.collection(`attendance/${eventId}/${program}`, ref => ref.orderBy('student_last_name'));
+    // this.attendanceCollection = this.attendanceCollectionRef.valueChanges();
+    // return this.attendanceCollection;
+    this.attendanceCollection = this.attendanceCollectionRef.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        const metadata = a.payload.doc.metadata;
+      //  const doc = a.payload.doc;
+        return { id,metadata, ...data };
+      }))
+    );
+    return this.attendanceCollection;
 
+  }
   getProgramsCoursesAttended(){
     this.attendanceDocumentRef = this.afDb.doc(`available_programs/courses`);
     this.attendanceDocument = this.attendanceDocumentRef.valueChanges();
     return this.attendanceDocument;
   }
-
+  getProgramsStrandsAttended(){
+    this.attendanceDocumentRef = this.afDb.doc(`available_programs/strands`);
+    this.attendanceDocument = this.attendanceDocumentRef.valueChanges();
+    return this.attendanceDocument;
+  }
 }

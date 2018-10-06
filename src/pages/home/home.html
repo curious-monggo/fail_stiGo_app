@@ -35,8 +35,8 @@
       class="card">
           <div class="card-img-news" [style.background-image]="'url(' + newsDocument.news_photo_url + ')'"></div>
           <ion-card-content>
-            <p>
-               {{ newsDocument.news_title | slice: 0: 145}} ...
+            <p class="overflow">
+               {{ newsDocument.news_title }} 
             </p>  
           </ion-card-content>
       </ion-card>
@@ -44,30 +44,32 @@
   
   <h3>Programs</h3>
   <ion-scroll class="scroll-programs" scrollX="true" direction="x">
-    <ion-card class="card small">
-      <div class="card-img-programs" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+    <ion-card class="card small" *ngFor="let course of latestCourseCollection"  (click)="goToProgramDetailPage(course.id, 'courses',course.program_acronym)">
+      <div class="card-img-programs" [style.background-image]="'url(' + course.program_photo_url + ')'"></div>
       <ion-card-content>
         <p>
-           Lorem ipsum dolor amet title
+          {{course.program_acronym}}
         </p>  
       </ion-card-content>
   </ion-card>
-  <ion-card class="card small">
-    <div class="card-img-programs" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+  <ion-card class="card small"  *ngFor="let strand of latestStrandCollection"  (click)="goToProgramDetailPage(strand.id, 'strands',strand.program_acronym)">
+    <div class="card-img-programs"  [style.background-image]="'url(' + strand.program_photo_url + ')'"></div>
     <ion-card-content>
       <p>
-         Lorem ipsum dolor amet title
+         {{strand.program_acronym}}
       </p>  
     </ion-card-content>
 </ion-card>
   </ion-scroll>
   <h3>Latest Events</h3>
   <ion-scroll class="scroll-events" scrollX="true" direction="x">
-    <ion-card class="card">
-      <div class="card-img-events" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
+    <ion-card class="card" *ngFor="let event of latestEventCollection" (click)="openEventDetailPage(event.id)">
+      <div class="card-img-events" [style.background-image]="'background-image:url('+event.event_photo_url+')'"></div>
+      <ion-card-content>
+        <p>
+           {{event.event_name}}
+        </p>  
+      </ion-card-content>
   </ion-card>
-  <ion-card class="card">
-    <div class="card-img-events" style="background-image:url('https://www.sti.edu/img/banners/tourism.jpg')"></div>
-</ion-card>
   </ion-scroll>
 </ion-content>

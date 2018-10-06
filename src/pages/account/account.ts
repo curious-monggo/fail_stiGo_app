@@ -19,7 +19,8 @@ import { AuthProvider } from './../../providers/auth/auth';
 export class AccountPage {
   userDocRef: any;
   userDoc: any;
-  isStudent: boolean =false;
+  isRegistered: boolean =false;
+  
   notice:string;
   constructor(
     public navCtrl: NavController, 
@@ -32,32 +33,41 @@ export class AccountPage {
   ionViewDidLoad() {
     this.authProvider.user$.subscribe(user => {
       if(user.user_type == 'Student'){
-        this.isStudent = true;
+        this.isRegistered = true;
         console.log(user.user_type);
         this.notice = 'You have already registered as a student.'
     
       }
       else if(user.user_type == 'SBG'){
-        this.isStudent = true;
+        this.isRegistered = true;
         console.log(user.user_type);
         this.notice = 'You have already registered as a student, SBG officer.'
     
       }
       else if(user.user_type == 'Admin'){
-        this.isStudent = true;
+        this.isRegistered = true;
         console.log(user.user_type);
-        this.notice = 'Welcome, admin.'
-    
+        this.notice = 'Welcome, Admin.'
+      }  
+      else if(user.user_type == 'Registrar'){
+        this.isRegistered = true;
+        console.log(user.user_type);
+        this.notice = 'Welcome, Registrar.'
+      }  
+      else if(user.user_type == 'Instructor'){
+        this.isRegistered = true;
+        console.log(user.user_type);
+        this.notice = 'Welcome, Instructor.'
       }  
       else{
-        this.isStudent = false;
+        this.isRegistered = false;
         this.notice ='Register account as student';
       }
     })
     console.log('ionViewDidLoad AccountPage');
   }
   goToRegistrationCodePage(){
-    if(this.isStudent == true){
+    if(this.isRegistered == true){
     }
     else{
       this.navCtrl.push('RegistrationCodePage');

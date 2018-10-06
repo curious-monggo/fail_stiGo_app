@@ -7,18 +7,18 @@
 <ion-header>
 
   <ion-navbar color="googleWhite">
-    <ion-title>Event Detail Page</ion-title>
+    <ion-title *ngIf="eventDocument">{{eventDocument.event_name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content *ngIf="eventDocument">
-  <div>
-    <img class="img" src="https://www.sti.edu/img/banners/tourism.jpg" />
-    <div padding-left>
+<ion-content>
+  <div *ngIf="eventDocument">
+    <img *ngIf="eventDocument.event_photo_url" class="img" src="{{eventDocument.event_photo_url}}" />
+    <div padding-left padding-top>
 
-      <h3 class="title">{{eventDocument.event_name}}</h3>
+      <!-- <h3 class="title"></h3> -->
 
       <div class="grey">
         <ion-icon name="calendar"></ion-icon>
@@ -32,7 +32,9 @@
         <ion-icon name="pin"></ion-icon>
         <label>{{eventDocument.event_location}}</label>
       </div>
-      <button ion-button (click)="openAttendancePage()">Course attendance list</button>
+      <button ion-button (click)="openAttendanceCoursePage()">Course attendance list</button>
+      <button ion-button (click)="openAttendanceStrandPage()">Strand attendance list</button>
+
       <!-- <p class="content">{{ newsDocument.news_content }}</p> -->
       <!-- <button ion-button color="primary" (click)="hostAttendance()">Attendance Host</button>
       <button ion-button color="secondary" (click)="signForAttendance()">Sign for attendance</button> -->

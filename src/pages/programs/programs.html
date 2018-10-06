@@ -1,20 +1,20 @@
-<ion-header>
+<ion-header >
 
   <ion-navbar color="googleWhite">
-    <ion-buttons left>
-      <button ion-button icon-only>
-        <ion-icon name="search"></ion-icon>
-      </button>
-    </ion-buttons>
+      <ion-buttons left>
+          <button ion-button icon-only >
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-buttons>
     <ion-title class="center">Programs</ion-title>
 
     <ion-buttons right>
-      <button ion-button round clear >
-        <ion-item class="transparent">
-          <ion-avatar item-end>
-            <!-- <img src="{{photo_url}}"> -->
-            <img src="photo_url" class="right">
-          </ion-avatar>
+      <button ion-button round clear (click)="onAccountPhotoClicked()" >
+        <ion-item  class="transparent" >
+            <ion-avatar item-end  >
+                <!-- <img src="{{photo_url}}"> -->
+                <img src="{{photo_url}}"  class="right">
+              </ion-avatar>
         </ion-item>
 
       </button>
@@ -33,16 +33,16 @@
 <ion-content class="card-background-page">
   <div [ngSwitch]="programType">
     <div *ngSwitchCase="'Courses'" >
-        <ion-card *ngFor="let courseDocument of courseCollection" (click)="openInAppBrowser(courseDocument.program_page_url)">
+        <ion-card *ngFor="let courseDocument of courseCollection" (click)="goToProgramDetailPage(courseDocument.id, 'courses',courseDocument.program_acronym)">
             
-            <div class="img overlay" [style.background-image]="'url(' + courseDocument.program_photo_url + ')'"></div>
+            <div class="img-course overlay" [style.background-image]="'url(' + courseDocument.program_photo_url + ')'"></div>
             <!-- <img src="{{courseDocument.program_photo_url}}" class="overlay"/> -->
             <div class="card-title">{{courseDocument.program_acronym}}</div>
             <div class="card-subtitle">{{courseDocument.program_name}}</div>
           </ion-card>
     </div>
     <div *ngSwitchCase="'Strands'" >
-        <ion-card *ngFor="let strandDocument of strandCollection" (click)="openInAppBrowser(strandDocument.program_page_url)">
+        <ion-card *ngFor="let strandDocument of strandCollection" (click)="goToProgramDetailPage(strandDocument.id, 'strands',strandDocument.program_acronym)">
             
             <div class="img overlay" [style.background-image]="'url(' + strandDocument.program_photo_url + ')'"></div>
             <!-- <img src="{{courseDocument.program_photo_url}}" class="overlay"/> -->

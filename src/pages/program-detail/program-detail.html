@@ -1,0 +1,235 @@
+<!--
+  Generated template for the ProgramDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{programAcronym}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="programDocument">
+    <img *ngIf="programDocument.program_photo_url" class="img" src="{{ programDocument.program_photo_url }}" />
+    <div padding>
+      <p class="date" *ngIf="programDocument.program_timestamp_post_created">
+        Date time created: {{ programDocument.program_timestamp_post_created?.toDate() | date: 'medium' }}</p>
+      <p class="date" *ngIf="programDocument.program_timestamp_post_last_updated">
+        Last updated: {{ programDocument.program_timestamp_post_last_updated?.toDate() | date: 'medium' }}</p>
+      <h1 class="title">{{ programDocument.program_name }}</h1>
+      <p class="content">{{ programDocument.program_description }}</p>
+    </div>
+  </div>
+  <ion-segment [(ngModel)]="yearLevel" color="primary" *ngIf="isCourse">
+    <ion-segment-button value="1st_year" (click)="firstYearClicked()" >
+      1st year
+    </ion-segment-button>
+    <ion-segment-button value="2nd_year" (click)="secondYearClicked()" >
+      2nd year
+    </ion-segment-button>
+    <ion-segment-button value="3rd_year" (click)="thirdYearClicked()">
+      3rd year
+    </ion-segment-button>
+    <ion-segment-button value="4th_year" (click)="fourthYearClicked()">
+      4th year
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment [(ngModel)]="grade" color="primary" *ngIf="!isCourse">
+    <ion-segment-button value="grade_11" (click)="firstYearClicked()" >
+      Grade 11
+    </ion-segment-button>
+    <ion-segment-button value="grade_12" (click)="secondYearClicked()" >
+      Grade 12
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="yearLevel">
+    <div *ngSwitchCase="'1st_year'">
+      <ion-grid >
+        <ion-row>
+          <ion-col>COURSE CODE</ion-col>
+          <ion-col>FIRST YEAR, FIRST TERM</ion-col>
+          <ion-col>UNITS</ion-col>
+          <ion-col>PRE-REQUISITE(S)</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let subject of firstYearFirstTermCollection">
+          <ion-col>{{subject.course_code}}</ion-col>
+          <ion-col>{{subject.course_name}}</ion-col>
+          <ion-col>{{subject.course_units}}</ion-col>
+          <ion-col>{{subject.course_pre_requisites}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid >
+          <ion-row>
+            <ion-col>COURSE CODE</ion-col>
+            <ion-col>FIRST YEAR, SECOND TERM</ion-col>
+            <ion-col>UNITS</ion-col>
+            <ion-col>PRE-REQUISITE(S)</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let subject of firstYearSecondTermCollection">
+            <ion-col>{{subject.course_code}}</ion-col>
+            <ion-col>{{subject.course_name}}</ion-col>
+            <ion-col>{{subject.course_units}}</ion-col>
+            <ion-col>{{subject.course_pre_requisites}}</ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+
+    <div *ngSwitchCase="'2nd_year'">
+        <ion-grid >
+          <ion-row>
+            <ion-col>COURSE CODE</ion-col>
+            <ion-col>SECOND YEAR, FIRST TERM</ion-col>
+            <ion-col>UNITS</ion-col>
+            <ion-col>PRE-REQUISITE(S)</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let subject of secondYearFirstTermCollection">
+            <ion-col>{{subject.course_code}}</ion-col>
+            <ion-col>{{subject.course_name}}</ion-col>
+            <ion-col>{{subject.course_units}}</ion-col>
+            <ion-col>{{subject.course_pre_requisites}}</ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid >
+            <ion-row>
+              <ion-col>COURSE CODE</ion-col>
+              <ion-col>SECOND YEAR, SECOND TERM</ion-col>
+              <ion-col>UNITS</ion-col>
+              <ion-col>PRE-REQUISITE(S)</ion-col>
+            </ion-row>
+            <ion-row *ngFor="let subject of secondYearSecondTermCollection">
+              <ion-col>{{subject.course_code}}</ion-col>
+              <ion-col>{{subject.course_name}}</ion-col>
+              <ion-col>{{subject.course_units}}</ion-col>
+              <ion-col>{{subject.course_pre_requisites}}</ion-col>
+            </ion-row>
+          </ion-grid>
+      </div>
+    <div *ngSwitchCase="'3rd_year'">
+        <ion-grid >
+          <ion-row>
+            <ion-col>COURSE CODE</ion-col>
+            <ion-col>THIRD YEAR, FIRST TERM</ion-col>
+            <ion-col>UNITS</ion-col>
+            <ion-col>PRE-REQUISITE(S)</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let subject of thirdYearFirstTermCollection">
+            <ion-col>{{subject.course_code}}</ion-col>
+            <ion-col>{{subject.course_name}}</ion-col>
+            <ion-col>{{subject.course_units}}</ion-col>
+            <ion-col>{{subject.course_pre_requisites}}</ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid >
+            <ion-row>
+              <ion-col>COURSE CODE</ion-col>
+              <ion-col>THIRD YEAR, SECOND TERM</ion-col>
+              <ion-col>UNITS</ion-col>
+              <ion-col>PRE-REQUISITE(S)</ion-col>
+            </ion-row>
+            <ion-row *ngFor="let subject of thirdYearSecondTermCollection">
+              <ion-col>{{subject.course_code}}</ion-col>
+              <ion-col>{{subject.course_name}}</ion-col>
+              <ion-col>{{subject.course_units}}</ion-col>
+              <ion-col>{{subject.course_pre_requisites}}</ion-col>
+            </ion-row>
+          </ion-grid>
+      </div>
+      <div *ngSwitchCase="'4th_year'">
+          <ion-grid >
+            <ion-row>
+              <ion-col>COURSE CODE</ion-col>
+              <ion-col>THIRD YEAR, FIRST TERM</ion-col>
+              <ion-col>UNITS</ion-col>
+              <ion-col>PRE-REQUISITE(S)</ion-col>
+            </ion-row>
+            <ion-row *ngFor="let subject of fourthYearFirstTermCollection">
+              <ion-col>{{subject.course_code}}</ion-col>
+              <ion-col>{{subject.course_name}}</ion-col>
+              <ion-col>{{subject.course_units}}</ion-col>
+              <ion-col>{{subject.course_pre_requisites}}</ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid >
+              <ion-row>
+                <ion-col>COURSE CODE</ion-col>
+                <ion-col>THIRD YEAR, SECOND TERM</ion-col>
+                <ion-col>UNITS</ion-col>
+                <ion-col>PRE-REQUISITE(S)</ion-col>
+              </ion-row>
+              <ion-row *ngFor="let subject of fourthYearSecondTermCollection">
+                <ion-col>{{subject.course_code}}</ion-col>
+                <ion-col>{{subject.course_name}}</ion-col>
+                <ion-col>{{subject.course_units}}</ion-col>
+                <ion-col>{{subject.course_pre_requisites}}</ion-col>
+              </ion-row>
+            </ion-grid>
+        </div>
+
+  </div>
+
+  <div [ngSwitch]="grade">
+    <div *ngSwitchCase="'grade_11'">
+      <ion-grid >
+        <ion-row>
+          <ion-col>1ST TERM SUBJECTS</ion-col>
+          <ion-col>REQUIRED DURATION</ion-col>
+          <ion-col>DURATION DECLARED</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let subject of grade11FirstTermCollection">
+          <ion-col>{{subject.subject_name}}</ion-col>
+          <ion-col>{{subject.subject_required_duration}}</ion-col>
+          <ion-col>{{subject.subject_duration_declared}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid >
+        <ion-row>
+          <ion-col>2ND TERM SUBJECTS</ion-col>
+          <ion-col>REQUIRED DURATION</ion-col>
+          <ion-col>DURATION DECLARED</ion-col>
+        </ion-row>
+          <ion-row *ngFor="let subject of grade11SecondTermCollection">
+            <ion-col>{{subject.course_code}}</ion-col>
+            <ion-col>{{subject.course_name}}</ion-col>
+            <ion-col>{{subject.course_units}}</ion-col>
+            <ion-col>{{subject.course_pre_requisites}}</ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+
+    <div *ngSwitchCase="'grade_12'">
+      <ion-grid >
+        <ion-row>
+          <ion-col>1ST TERM SUBJECTS</ion-col>
+          <ion-col>REQUIRED DURATION</ion-col>
+          <ion-col>DURATION DECLARED</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let subject of grade12FirstTermCollection">
+          <ion-col>{{subject.subject_name}}</ion-col>
+          <ion-col>{{subject.subject_required_duration}}</ion-col>
+          <ion-col>{{subject.subject_duration_declared}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid >
+        <ion-row>
+          <ion-col>2ND TERM SUBJECTS</ion-col>
+          <ion-col>REQUIRED DURATION</ion-col>
+          <ion-col>DURATION DECLARED</ion-col>
+        </ion-row>
+          <ion-row *ngFor="let subject of grade12SecondTermCollection">
+            <ion-col>{{subject.course_code}}</ion-col>
+            <ion-col>{{subject.course_name}}</ion-col>
+            <ion-col>{{subject.course_units}}</ion-col>
+            <ion-col>{{subject.course_pre_requisites}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+
+  </div>
+</ion-content>

@@ -41,7 +41,7 @@ export class StrandProvider {
    }
    getLatestStrandCollection(){
     let programCollectionRef = this.afDb.collection('strands', 
-    ref => ref.orderBy('program_timestamp_post_created', 'desc').limit(2));
+    ref => ref.orderBy('program_timestamp_post_created', 'desc').limit(1));
     let programCollection = programCollectionRef.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Program;
@@ -57,4 +57,52 @@ export class StrandProvider {
     this.programDocument = this.programDocumentRef.valueChanges();
     return this.programDocument;
   }
+
+  getG11FirstTermStrandSubjects(strand_id){
+    let ref = this.afDb.collection(`strands/${strand_id}/grade_11/1st_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  getG11SecondTermStrandSubjects(strand_id){
+    let ref = this.afDb.collection(`strands/${strand_id}/grade_11/2nd_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+
+  getG12FirstTermStrandSubjects(strand_id){
+    let ref = this.afDb.collection(`strands/${strand_id}/grade_12/1st_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  getG12SecondTermStrandSubjects(strand_id){
+    let ref = this.afDb.collection(`strands/${strand_id}/grade_12/2nd_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+
+
 }

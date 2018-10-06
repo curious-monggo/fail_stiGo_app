@@ -31,11 +31,33 @@ export class EventsPage {
     private eventProvider: EventProvider,
     private afAuth: AngularFireAuth
     ) {
+      this.afAuth.authState.subscribe(user => {
+        if(user){
+          this.photo_url = user.photoURL;
+        }
+        else{
+          this.photo_url = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+        }
+      })
       this.getLatestEventCollection();
+      
+  }
+  onAccountPhotoClicked(){
+    this.afAuth.authState.subscribe(user => {
+      if(user){
+        this.goToAccountPage();
+      }
+      else{
+        this.goToLoginPage();
+      }
+    })
   }
   goToAccountPage(){
+    this.navCtrl.push('AccountPage');
   }
-
+  goToLoginPage(){
+    this.navCtrl.push('LoginPage');
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventsPage');
 

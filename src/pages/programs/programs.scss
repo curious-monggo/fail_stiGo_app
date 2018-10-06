@@ -46,6 +46,14 @@ page-programs {
             height: 260px;   
 
         }
+        ion-card .img-course{
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            height: 700px;   
+            
+
+        }
         // ion-card img {
         //   filter: blur(0.5px);
         // }
@@ -57,18 +65,20 @@ page-programs {
         .card-title {
           position: absolute;
           top: 36%;
-          font-size: 2.0em;
+          font-size: 3.2em;
           width: 100%;
           font-weight: bold;
           color: #fff;
+          text-shadow: 4px 4px #3F51B5;
         }
       
         .card-subtitle {
-          font-size: 1.0em;
+          font-size: 1.2em;
           position: absolute;
           top: 52%;
           width: 100%;
           color: #fff;
+          text-shadow: 2px 2px #3F51B5;
         }
       
       }

@@ -29,48 +29,72 @@ export class ProgramsPage {
   displayName;
   photo_url;
   programType;
-  courseCollection:Program[];
-  strandCollection:Program[];
+  courseCollection: Program[];
+  strandCollection: Program[];
   programDocumentId;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private courseProvider: CourseProvider,
     private strandProvider: StrandProvider,
     // private inAppBrowser: InAppBrowser,
     private afAuth: AngularFireAuth
-    ) {
-      // this.programType = 'Courses';
-      // if(this.programType == 'Courses'){
-      //   this.getCourseCollection();
-      // }
-      // else if(this.programType == 'Strands'){
-      //   this.getStrandCollection();
-      // }
+  ) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.photo_url = user.photoURL;
+      }
+      else {
+        this.photo_url = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+      }
+    })
+    this.programType = 'Courses';
+    if (this.programType == 'Courses') {
+      this.getCourseCollection();
+      console.log('course');
+
+    }
+    else if (this.programType == 'Strands') {
+      this.getStrandCollection();
+      console.log('Strands');
+    }
+  }
+  goToProgramDetailPage(programId, programType, programAcronym) {
+    this.navCtrl.push('ProgramDetailPage', {
+      programId: programId,
+      programType: programType,
+      programAcronym: programAcronym
+    });
+    console.log(programId, programType);
+  }
+  onAccountPhotoClicked(){
+    this.afAuth.authState.subscribe(user => {
+      if(user){
+        this.goToAccountPage();
+      }
+      else{
+        this.goToLoginPage();
+      }
+    })
   }
   goToAccountPage(){
+    this.navCtrl.push('AccountPage');
   }
-  // ionViewDidLoad() {
-  //   this.programType = 'Courses';
-  //   if(this.programType == 'Courses'){
-  //     this.getCourseCollection();
-  //   }
-  //   else if(this.programType == 'Strands'){
-  //     this.getStrandCollection();
-  //   }
-  // }
-  // getCourseCollection() {
-  //   this.courseProvider.getCourseCollection().subscribe(courseCollection => {
-  //     this.courseCollection = courseCollection;
-  //     console.log(courseCollection);
-  //   });
-  // }
-  // getStrandCollection(){
-  //   this.strandProvider.getStrandCollection().subscribe(strandCollection => {
-  //     this.strandCollection = strandCollection;
-  //     console.log(strandCollection);
-  //   });
-  // }
+  goToLoginPage(){
+    this.navCtrl.push('LoginPage');
+  }
+  getCourseCollection() {
+    this.courseProvider.getCourseCollection().subscribe(courseCollection => {
+      this.courseCollection = courseCollection;
+      console.log(courseCollection);
+    });
+  }
+  getStrandCollection() {
+    this.strandProvider.getStrandCollection().subscribe(strandCollection => {
+      this.strandCollection = strandCollection;
+      console.log(strandCollection);
+    });
+  }
   // openInAppBrowser(url: string) {
   //   const options:InAppBrowserOptions = {
   //     zoom: 'no'

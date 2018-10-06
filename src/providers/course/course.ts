@@ -41,7 +41,7 @@ export class CourseProvider {
    }
    getLatestCourseCollection(){
     let programCollectionRef = this.afDb.collection('courses', 
-    ref => ref.orderBy('program_timestamp_post_created', 'desc').limit(2));
+    ref => ref.orderBy('program_timestamp_post_created', 'desc').limit(1));
     let programCollection = programCollectionRef.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Program;
@@ -57,5 +57,105 @@ export class CourseProvider {
     this.programDocument = this.programDocumentRef.valueChanges();
     return this.programDocument;
   }
+
+
+
+
+  //first year
+  getFirstYearFirstTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/1st_year/1st_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  getFirstYearSecondTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/1st_year/2nd_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  //second year
+  getSecondYearFirstTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/2nd_year/1st_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  getSecondYearSecondTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/2nd_year/2nd_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  //third year
+  getThirdYearFirstTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/3rd_year/1st_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  getThirdYearSecondTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/3rd_year/2nd_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  //fourth year
+  getFourthYearFirstTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/4th_year/1st_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+  getFourthYearSecondTermCourseSubjects(course_id){
+    let ref = this.afDb.collection(`courses/${course_id}/4th_year/2nd_term/subjects`);
+    let collection = ref.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    return collection;
+  }
+
+
+
+
 
 }

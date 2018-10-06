@@ -9,11 +9,11 @@
     <ion-title class="center">Events</ion-title>
 
     <ion-buttons right>
-      <button ion-button round clear (click)="goToAccountPage()" >
+      <button ion-button round clear (click)="onAccountPhotoClicked()" >
         <ion-item  class="transparent" >
             <ion-avatar item-end  >
                 <!-- <img src="{{photo_url}}"> -->
-                <img src="photo_url"  class="right">
+                <img src="{{photo_url}}"  class="right">
               </ion-avatar>
         </ion-item>
 
@@ -26,13 +26,18 @@
 
 
 
+
 <ion-content>
   <div class="card-background-page" *ngFor="let eventDocument of eventCollection">
     <ion-card (click)="goToEventDetail(eventDocument.id,eventDocument.event_timestamp_post_created)">
         <!-- <img src="https://www.sti.edu/img/banners/tourism.jpg"/> -->
-        <div class="card-img-event" [style.background-image]="'url(' + 'https://www.sti.edu/img/banners/tourism.jpg' + ')'"></div>
-        <div class="card-title">{{eventDocument.event_name}}</div>
-        <div class="card-subtitle">Address, {{eventDocument.event_date}}</div>
+        <div class="card-img-event" [style.background-image]="'url(' + eventDocument.event_photo_url + ')'"></div>
+        <ion-card-content>
+            <h1><b>{{eventDocument.event_name}}</b></h1>
+            <p>{{eventDocument.event_location}}, {{eventDocument.event_date}}</p>
+          </ion-card-content>
+        <!-- <div class="card-title">{{eventDocument.event_name}}</div>
+        <div class="card-subtitle">{{eventDocument.event_location}}, {{eventDocument.event_date}}</div> -->
       </ion-card>
   </div>
 

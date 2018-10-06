@@ -7,11 +7,12 @@
 <ion-header>
 
   <ion-navbar color="googleWhite">
-    <ion-title>Attendance List</ion-title>
+    <ion-title *ngIf="isCourseChosen">Course Attendance List</ion-title>
+    <ion-title *ngIf="isStrandChosen">Strand Attendance List</ion-title>
   </ion-navbar>
 
   <ion-segment [(ngModel)]="programType" color="primary">
-    <ion-segment-button *ngFor="let program of programsList" value="{{program}}" (click)="getList(program)">
+    <ion-segment-button *ngFor="let program of programsList" value="{{program}}" (click)="getAttendanceList(program)">
       {{program}}
     </ion-segment-button>
     <!-- <ion-segment-button value="puppies">
